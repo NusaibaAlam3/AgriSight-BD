@@ -291,6 +291,25 @@ ADMIN_CSS = """
     }
 }
 
+@media (max-width: 768px) {
+    /* The admin page hides Streamlit's header on desktop. On a phone the
+       header holds the button that opens the sidebar, so bring it back. */
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stHeader"] {
+        display: flex !important;
+        background: #E7ECF1 !important;
+        border-bottom: 1px solid #D5DEE6 !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .block-container {
+        padding-top: 3.75rem !important;
+    }
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .ops-kpis strong {
+        font-size: 1.3rem;
+    }
+    [data-testid="stAppViewContainer"]:has(.admin-shell) input,
+    [data-testid="stAppViewContainer"]:has(.admin-shell) textarea {
+        font-size: 16px !important;
+    }
+}
 @media (max-width: 640px) {
     [data-testid="stAppViewContainer"]:has(.admin-shell) .block-container {
         padding-left: 0.7rem !important;
