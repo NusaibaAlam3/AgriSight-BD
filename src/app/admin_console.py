@@ -221,6 +221,106 @@ ADMIN_CSS = """
         grid-template-columns: 1fr;
     }
 }
+
+/* Mobile-only layout refinements. Desktop styling above remains unchanged. */
+@media (max-width: 768px) {
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .block-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0.85rem 0.85rem 2rem !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stMain"] {
+        min-width: 0 !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stMainBlockContainer"] {
+        min-width: 0 !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .ops-head {
+        margin-bottom: 12px;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .ops-head h1 {
+        font-size: clamp(1.45rem, 6vw, 1.8rem) !important;
+        overflow-wrap: anywhere;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .ops-head p {
+        font-size: 0.94rem !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stHorizontalBlock"] {
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+        min-width: min(100%, 15rem) !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stDataFrame"],
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stTable"],
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stMarkdown"] {
+        max-width: 100%;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stDataFrame"] {
+        overflow-x: auto !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) input,
+    [data-testid="stAppViewContainer"]:has(.admin-shell) textarea,
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-baseweb="select"] {
+        max-width: 100% !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) button,
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stDownloadButton"] button {
+        min-height: 2.7rem;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stFileUploader"] section {
+        padding: 0.8rem !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .ops-kpis,
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .ops-steps {
+        gap: 0.65rem;
+    }
+}
+
+@media (max-width: 640px) {
+    [data-testid="stAppViewContainer"]:has(.admin-shell) .block-container {
+        padding-left: 0.7rem !important;
+        padding-right: 0.7rem !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stSidebar"] {
+        min-width: 0 !important;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stSidebar"] button {
+        min-height: 2.75rem;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stMetricValue"] {
+        font-size: 1.45rem !important;
+        overflow-wrap: anywhere;
+    }
+
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stDownloadButton"] button,
+    [data-testid="stAppViewContainer"]:has(.admin-shell) [data-testid="stFormSubmitButton"] button {
+        width: 100%;
+    }
+}
 </style>
 """
 
