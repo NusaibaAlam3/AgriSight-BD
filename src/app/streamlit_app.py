@@ -57,7 +57,7 @@ st.set_page_config(
     page_title="AgriSight-BD",
     page_icon="🌾",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
 )
 
 ZONE_COLORS = {
@@ -596,6 +596,104 @@ hr {
         font-size: 1.6rem !important;
     }
 }
+
+@media (max-width: 768px) {
+    /* Let Streamlit choose the mobile sidebar state and keep its controls available. */
+    [data-testid="stSidebar"] {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: min(268px, 85vw) !important;
+        min-width: min(268px, 85vw) !important;
+        max-width: min(268px, 85vw) !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        flex: 0 0 auto !important;
+        overflow: hidden !important;
+        z-index: 1000 !important;
+    }
+    [data-testid="stSidebarHeader"],
+    [data-testid="stSidebarCollapsedControl"],
+    [data-testid="collapsedControl"],
+    [data-testid="stSidebarCollapseButton"] {
+        display: flex !important;
+        visibility: visible !important;
+    }
+    [data-testid="stSidebarContent"] {
+        max-height: 100dvh !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+
+    /* Remove the desktop-only reserved sidebar width from the main content. */
+    [data-testid="stAppViewContainer"] > div:has([data-testid="stMain"]) {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+    }
+    [data-testid="stMain"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        max-height: none !important;
+        overflow-x: hidden !important;
+    }
+    .block-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 1rem 0.85rem 2rem !important;
+    }
+
+    /* Keep existing multi-column content, but allow it to wrap on narrow screens. */
+    [data-testid="stHorizontalBlock"] {
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+    }
+    [data-testid="stColumn"] {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    /* Make existing controls easier to use with touch input. */
+    [data-testid="stMain"] button,
+    [data-testid="stSidebar"] button,
+    [data-testid="stMain"] [role="button"] {
+        min-height: 44px;
+    }
+    [data-testid="stTextInputRootElement"],
+    [data-testid="stSelectbox"] [data-baseweb="select"],
+    [data-testid="stMultiSelect"] [data-baseweb="select"] {
+        min-height: 44px;
+    }
+
+    /* Keep visualizations and tabular content within the phone viewport. */
+    [data-testid="stPlotlyChart"],
+    [data-testid="stVegaLiteChart"],
+    [data-testid="stDataFrame"],
+    [data-testid="stTable"] {
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+    [data-testid="stDataFrame"],
+    [data-testid="stTable"] {
+        overflow-x: auto !important;
+    }
+    .page-head h1 {
+        font-size: 1.45rem !important;
+        overflow-wrap: anywhere;
+    }
+    .page-head p {
+        font-size: 0.94rem !important;
+    }
+    [data-testid="stForm"] {
+        padding: 0.85rem !important;
+    }
+}
+
 </style>
 """
 
@@ -4305,4 +4403,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main() 
