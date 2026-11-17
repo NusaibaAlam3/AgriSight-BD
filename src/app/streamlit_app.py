@@ -210,6 +210,7 @@ footer,
 [data-testid="stDecoration"] {
     display: none;
 }
+@media (min-width: 769px) {
 [data-testid="stSidebar"] {
     background: #FFFFFF;
     border-right: 1px solid #E4EBE5;
@@ -260,6 +261,7 @@ footer,
     min-height: 0 !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
+}
 }
 [data-testid="stHorizontalBlock"] {
     flex-wrap: wrap !important;
@@ -394,11 +396,14 @@ footer,
     box-shadow: none;
     font-weight: 600;
 }
+@media (min-width: 769px) {
 [data-testid="stSidebarHeader"],
 [data-testid="stSidebarCollapsedControl"],
 [data-testid="collapsedControl"],
-[data-testid="stSidebarCollapseButton"] {
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stExpandSidebarButton"] {
     display: none !important;
+}
 }
 .page-head {
     padding: 4px 0 8px 0;
@@ -598,30 +603,30 @@ hr {
 }
 
 @media (max-width: 768px) {
-    /* Let Streamlit choose the mobile sidebar state and keep its controls available. */
-    [data-testid="stSidebar"] {
-        position: fixed !important;
-        top: 0 !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        width: min(268px, 85vw) !important;
-        min-width: min(268px, 85vw) !important;
-        max-width: min(268px, 85vw) !important;
-        height: 100dvh !important;
-        max-height: 100dvh !important;
-        flex: 0 0 auto !important;
-        overflow: hidden !important;
-        z-index: 1000 !important;
+    /* Phones: let Streamlit open and close the sidebar as an overlay.
+       The desktop pinning rules above only apply at 769px and wider. */
+    [data-testid="stToolbar"] {
+        display: flex !important;
+        visibility: visible !important;
+    }
+    [data-testid="stToolbarActions"],
+    [data-testid="stMainMenu"],
+    [data-testid="stAppDeployButton"],
+    .stDeployButton {
+        display: none !important;
     }
     [data-testid="stSidebarHeader"],
     [data-testid="stSidebarCollapsedControl"],
     [data-testid="collapsedControl"],
-    [data-testid="stSidebarCollapseButton"] {
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="stExpandSidebarButton"] {
         display: flex !important;
         visibility: visible !important;
     }
+    [data-testid="stSidebar"] {
+        z-index: 1000 !important;
+    }
     [data-testid="stSidebarContent"] {
-        max-height: 100dvh !important;
         overflow-x: hidden !important;
         overflow-y: auto !important;
     }
@@ -643,7 +648,10 @@ hr {
     .block-container {
         width: 100% !important;
         max-width: 100% !important;
-        padding: 1rem 0.85rem 2rem !important;
+        padding: 3.75rem 0.85rem 2rem !important;
+    }
+    html, body, [data-testid="stApp"] {
+        overflow-x: hidden !important;
     }
 
     /* Keep existing multi-column content, but allow it to wrap on narrow screens. */
@@ -691,6 +699,29 @@ hr {
     }
     [data-testid="stForm"] {
         padding: 0.85rem !important;
+    }
+
+    /* 16px inputs stop iPhones from zooming in when a field is tapped. */
+    input, textarea, [data-baseweb="select"] input {
+        font-size: 16px !important;
+    }
+    /* Wide pages scroll inside their own box instead of the whole page. */
+    [data-testid="stTabs"] [role="tablist"],
+    [data-testid="stTabs"] [data-baseweb="tab-list"] {
+        overflow-x: auto !important;
+    }
+    [data-testid="stMetricValue"] {
+        font-size: 1.5rem !important;
+        overflow-wrap: anywhere;
+    }
+    [data-testid="stMarkdownContainer"] table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    [data-testid="stDownloadButton"] button,
+    [data-testid="stFormSubmitButton"] button {
+        width: 100%;
     }
 }
 
@@ -4403,4 +4434,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()
