@@ -297,6 +297,7 @@ def create_account(
     return get_user(user_id), ""
 
 
+
 def _ensure_builtin(
     login: str,
     password: str,
@@ -305,37 +306,71 @@ def _ensure_builtin(
     organization: str,
     reset_password: bool,
 ) -> None:
-    """Create one built-in account when it is missing."""
+    """Safely initialize a built-in account."""
 
     conn = _connect()
+
     try:
+        # Serialize account initialization across concurrent sessions.
+        conn.execute("BEGIN IMMEDIATE")
+
         row = conn.execute(
             "SELECT id FROM users WHERE email = ?",
             (login,),
         ).fetchone()
-        salt = secrets.token_hex(16)
-        digest = _hash_password(password, salt)
+
         if row is None:
+            salt = secrets.token_hex(16)
+            digest = _hash_password(password, salt)
+
             conn.execute(
                 """
                 INSERT INTO users (
-                    name, email, password_hash, salt, organization,
-                    role, districts, active, created_at
+                    name,
+                    email,
+                    password_hash,
+                    salt,
+                    organization,
+                    role,
+                    districts,
+                    active,
+                    created_at
                 )
                 VALUES (?, ?, ?, ?, ?, ?, '[]', 1, ?)
                 """,
-                (name, login, digest, salt, organization, role, _now()),
+                (
+                    name,
+                    login,
+                    digest,
+                    salt,
+                    organization,
+                    role,
+                    _now(),
+                ),
             )
+
         elif reset_password:
+            salt = secrets.token_hex(16)
+            digest = _hash_password(password, salt)
+
             conn.execute(
                 """
                 UPDATE users
-                SET password_hash = ?, salt = ?, role = ?, active = 1
+                SET password_hash = ?,
+                    salt = ?,
+                    role = ?,
+                    active = 1
                 WHERE id = ?
                 """,
                 (digest, salt, role, int(row["id"])),
             )
+
         conn.commit()
+
+    except Exception:
+        conn.rollback()
+        raise
+
     finally:
         conn.close()
 
